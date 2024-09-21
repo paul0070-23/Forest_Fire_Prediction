@@ -5,35 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Forest Fire Prediction</title>
-
+{% comment %} 
     <link rel="stylesheet" href="{{ url_for('static',filename='fonts/material-icon/css/material-design-iconic-font.min.css')}}">
     <link rel="stylesheet" href="{{ url_for('static',filename='vendor/jquery-ui/jquery-ui.min.css')}}">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css')}}">  {% endcomment %}
 </head>
 <body>
 
     <div class="main">
         
         <div class="header">
-            <img src="{{ url_for('static', filename = 'images/header-text.png')}}" alt="">
+            {% comment %} <img src="{{ url_for('static', filename = 'images/header-text.png')}}" alt=""> {% endcomment %}
             <h1>ALGERIAN FOREST FIRE PREDICTION</h1>
-            <img src="{{ url_for('static', filename = 'images/dots.png')}}" alt="">
+            {% comment %} <img src="{{ url_for('static', filename = 'images/dots.png')}}" alt=""> {% endcomment %}
         </div>
         <h2>By Paul
         	<div class="contact-details" >
-				<a href="https://github.com/aravind9722" rel="noopener noreferrer"
+				<a href="https://github.com/paul0070-23" rel="noopener noreferrer"
 					target="_blank"
 				>
-					<img src="{{ url_for('static',filename='images/Github.png') }}" />
+					{% comment %} <img src="{{ url_for('static',filename='images/Github.png') }}" /> {% endcomment %}
 				</a>
                 <a href="https://www.linkedin.com/in/aravind-selvam/" rel="noopener noreferrer"
                    target="_blank"
 				>
-					<img src="{{ url_for('static',filename='images/linkedin.png') }}" />
+					{% comment %} <img src="{{ url_for('static',filename='images/linkedin.png') }}" /> {% endcomment %}
 				</a>
 			</div>
         </h2>
+        {% comment %}  
         <div class="container">
             <h3>Fire Prediction (Classification Model) </h3>
             <form action="{{ url_for('predict')}}" id="booking-form" class="booking-form" method="POST">
@@ -64,17 +65,17 @@
                 </div>
                           {{prediction_text1}}
             </form>
-        </div>
+        </div>{% endcomment %}
         <div class="container">
             <h3>Fire Weather Index Prediction (Regression Model) </h3>
-            <form action="{{ url_for('predictR')}}" id="Reg_form" class="booking-form" method="POST">
+            <form action="{{ url_for('predict_datapoint')}}" id="Reg_form" class="booking-form" method="POST">
                 <div class="form-group">
                     <div>
                         <label for="Temperature1">Temperature</label>
                         <input type="text" id="Temperature1" name="Temperature" placeholder="Temperature" />
                     </div>
                     <div>
-                        <label for="Wind_speed">Windspeed</label>
+                        <label for="Wind_speed">Rain</label>
                         <input type="text" id="Wind_speed" name="Wind_speed" placeholder="Wind speed" />
                     </div>
                     <div>
@@ -93,7 +94,7 @@
                         <input type="submit" id="submitR" class="submit" value="Predict" />
                     </div>
                 </div>
-                          {{prediction_text2}}
+                          {{result}}
             </form>
         </div>
 

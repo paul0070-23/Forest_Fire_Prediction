@@ -2,43 +2,45 @@ import pickle
 from flask import Flask, request, jsonify,render_template
 import numpy as np
 import pandas as pd
+import warnings
+warnings.filterwarnings("ignore")
 from sklearn.preprocessing import StandardScaler
 
 app = Flask(__name__)
 
-## import ridge regressor model and standard scaler pickle
-ridge_model = pickle.load(open('models/ridge.pkl','rb'))
+## import regressor model and standard scaler pickle
+reg_model = pickle.load(open('models/regressor.pkl','rb'))
 standard_scaler = pickle.load(open('models/scaler.pkl','rb'))
 
 
 ## route for home page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # return render_template('index.html')
+    return render_template('index1.html')
 
-##
+## for prediction
 @app.route('/predictdata', methods=['GET','POST'])
 def predict_datapoint():
     if request.method=='POST':
         ## first read data and then interact with pickle file (use request)
+        ## the order of input should be same as in the model file
         Temperature = float(request.form.get('Temperature'))
-        RH = float(request.form.get('RH'))
-        Ws = float(request.form.get('Ws'))
         Rain = float(request.form.get('Rain'))
         FFMC = float(request.form.get('FFMC'))
         DMC = float(request.form.get('DMC'))
         ISI = float(request.form.get('ISI'))
-        BUI = float(request.form.get('BUI'))
-        Classes = float(request.form.get('Classes'))
-        Region = float(request.form.get('Region'))
         
-        new_data_scaled = standard_scaler.transform([Temperature,RH,Ws,Rain,FFMC,DMC,ISI,Classes,Region])
-        result = ridge_model.predict(new_data_scaled)
         
-        return render_template('home.html',result=result[0])
+        new_data_scaled = standard_scaler.transform([[Temperature,Rain,FFMC,DMC,ISI]])
+        result = reg_model.predict(new_data_scaled)
+        
+        return render_template('home1.html',result=result[0])
+        
         
     else:
-        return render_template('home.html')
+        return render_template('home1.html')
+        # return render_template('home.html')
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0")
+    app.run(debug=True, port=5000)
