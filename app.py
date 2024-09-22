@@ -35,8 +35,10 @@ def predict_datapoint():
         new_data_scaled = standard_scaler.transform([[Temperature,Rain,FFMC,DMC,ISI]])
         result = reg_model.predict(new_data_scaled)
         
-        return render_template('home1.html',result=result[0])
-        
+        if result > 15:
+            return render_template('home1.html',result="Fuel Moisture Code index is {:.4f} ---- Warning!!! High hazard rating".format(result[0]))
+        else:
+            return render_template('home1.html',result="Fuel Moisture Code index is {:.4f} ---- Safe.......Low hazard rating".format(result[0]))
         
     else:
         return render_template('home1.html')
